@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {ContactList} from "../interfaces/ContactList";
 import {Contact} from "../interfaces/Contact";
-import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'

@@ -3,6 +3,7 @@ import {ContactList} from "../../interfaces/ContactList";
 import {ContactApiService} from "../../services/contact-api.service";
 import {Contact} from "../../interfaces/Contact";
 import {ContactService} from "../../services/contact.service";
+import {GlobalMessagesService} from "../../services/global-messages.service";
 
 @Component({
   selector: 'app-contact-list',
@@ -11,7 +12,11 @@ import {ContactService} from "../../services/contact.service";
 })
 export class ContactlistComponent implements OnInit {
 
-  constructor(private contactApiService: ContactApiService, private contactService: ContactService) {
+  constructor(
+    private contactApiService: ContactApiService,
+    private contactService: ContactService,
+    private globalMessagesService: GlobalMessagesService
+  ) {
   }
 
   get customerContactList(): ContactList | undefined {
@@ -29,7 +34,6 @@ export class ContactlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getContactListByName("Kunden");
     // get contact list
     this.contactApiService.getContactLists().subscribe((lists: ContactList[]) => {
       this.customerContactList = lists.find(l => l.name === "Kunden"); // TODO: "Kunden" is hard coded!
@@ -38,23 +42,13 @@ export class ContactlistComponent implements OnInit {
         this.contactApiService.getContacts(this.customerContactList.contactListId).subscribe((contacts: Contact[]) => {
           this.contacts = contacts;
         }, error => {
-          // TODO: error handling
-          console.log(error)
+          this.globalMessagesService.error = error
         });
       } else {
-        // TODO: error handling
-        console.log("customerContactList is null");
+        this.globalMessagesService.error = "couldn't get customer contact list"
       }
     }, error => {
-      // TODO: error handling
-      console.log(error)
+      this.globalMessagesService.error = error
     });
   }
-
-  // getContactListByName(name: string) {
-  //   this.contactListService.getContactLists().subscribe((lists: ContactList[]) => {
-  //     this.customerContactList = lists.find(l => l.name === name);
-  //   });
-  // }
-
 }

@@ -1,7 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Contact} from "../interfaces/Contact";
-import {ContactService} from "../services/contact.service";
+import {Component} from '@angular/core';
+import {GlobalMessagesService} from "../services/global-messages.service";
 
 @Component({
   selector: 'app-root',
@@ -10,4 +8,14 @@ import {ContactService} from "../services/contact.service";
 })
 export class AppComponent {
   title = 'snapaddy-trial-work';
+
+  constructor(private globalMessagesService: GlobalMessagesService) {
+  }
+
+  get globalSuccess(): string | undefined {
+    return this.globalMessagesService.success;
+  }
+  get globalError(): string | undefined {
+    return this.globalMessagesService.error;
+  }
 }

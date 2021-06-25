@@ -1,1 +1,11 @@
 <router-outlet></router-outlet>
+
+<app-global-message
+  [message]="globalError"
+  color="error"
+></app-global-message>
+
+<app-global-message
+  [message]="globalSuccess"
+  color="success"
+></app-global-message>

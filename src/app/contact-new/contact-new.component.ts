@@ -4,6 +4,7 @@ import {ContactApiService} from "../../services/contact-api.service";
 import {ContactList} from "../../interfaces/ContactList";
 import {ContactService} from "../../services/contact.service";
 import {Router} from "@angular/router";
+import {GlobalMessagesService} from "../../services/global-messages.service";
 
 @Component({
   selector: 'app-contact-new',
@@ -15,7 +16,8 @@ export class ContactNewComponent implements OnInit {
   constructor(
     private contactApiService: ContactApiService,
     private contactService: ContactService,
-    private router: Router
+    private router: Router,
+    private globalMessagesService: GlobalMessagesService
   ) {
   }
 
@@ -40,11 +42,12 @@ export class ContactNewComponent implements OnInit {
 
   createContact(): void {
     this.contactApiService.createContact(this.contact).subscribe((newContact: Contact) => {
-      // TODO: success handling
-      console.log("successfully created Contact")
+      this.globalMessagesService.success = "created contact";
       this.contacts?.push(newContact);
       // TODO: make navigation relative to /contactlist
       this.router.navigate(['/contactlist/contact-edit', newContact.id])
+    }, error => {
+      this.globalMessagesService.error = error;
     });
   }
 
