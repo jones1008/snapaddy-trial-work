@@ -10,6 +10,7 @@ import { ContactEditView } from './contact-edit/contact-edit-view.component';
 import { ContactEditComponent } from './components/contact-edit/contact-edit.component';
 import { ContactNewComponent } from './contact-new/contact-new.component';
 import { GlobalMessageComponent } from './components/global-message/global-message.component';
+import { SetupComponent } from './setup/setup.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { GlobalMessageComponent } from './components/global-message/global-messa
     ContactEditView,
     ContactEditComponent,
     ContactNewComponent,
-    GlobalMessageComponent
+    GlobalMessageComponent,
+    SetupComponent
   ],
   imports: [
     BrowserModule,

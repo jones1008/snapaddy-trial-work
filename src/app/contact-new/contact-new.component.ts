@@ -34,7 +34,7 @@ export class ContactNewComponent implements OnInit {
     lastName: "",
     organization: "",
     position: "",
-    contactListId: "pnXPOzNx4wAmrel9" // TODO: this is hard coded -> store current contactList in some sort of global angular store?
+    contactListId: "pnXPOzNx4wAmrel9" // TODO: this is hard coded
   }
 
   ngOnInit(): void {

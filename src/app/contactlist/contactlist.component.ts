@@ -4,6 +4,7 @@ import {ContactApiService} from "../../services/contact-api.service";
 import {Contact} from "../../interfaces/Contact";
 import {ContactService} from "../../services/contact.service";
 import {GlobalMessagesService} from "../../services/global-messages.service";
+import {ApiDataService} from "../../services/api-data.service";
 
 @Component({
   selector: 'app-contact-list',
@@ -15,7 +16,8 @@ export class ContactlistComponent implements OnInit {
   constructor(
     private contactApiService: ContactApiService,
     private contactService: ContactService,
-    private globalMessagesService: GlobalMessagesService
+    private globalMessagesService: GlobalMessagesService,
+    private apiDataService: ApiDataService
   ) {
   }
 
@@ -33,10 +35,13 @@ export class ContactlistComponent implements OnInit {
     this.contactService.contacts = value;
   }
 
+  // defaultContactlistName: string = "Kunden";
+  defaultContactlistName: string | null = this.apiDataService.contactlistName;
+
   ngOnInit(): void {
     // get contact list
     this.contactApiService.getContactLists().subscribe((lists: ContactList[]) => {
-      this.customerContactList = lists.find(l => l.name === "Kunden"); // TODO: "Kunden" is hard coded!
+      this.customerContactList = lists.find(l => l.name === this.defaultContactlistName);
       if (this.customerContactList) {
         // get contact list via listId
         this.contactApiService.getContacts(this.customerContactList.contactListId).subscribe((contacts: Contact[]) => {

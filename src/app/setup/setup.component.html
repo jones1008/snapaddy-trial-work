@@ -1,0 +1,9 @@
+<form (ngSubmit)="saveData()">
+  <label for="apiToken">snapADDY API-Token</label>
+  <input type="text" [(ngModel)]="apiToken" id="apiToken" name="apiToken">
+  <br>
+  <label for="contactlist-name">Contact list name</label>
+  <input type="text" [(ngModel)]="contactlistName" id="contactlist-name" name="contactlist-name">
+  <br>
+  <button type="submit">Continue</button>
+</form>
