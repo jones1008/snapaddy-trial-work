@@ -1,0 +1,14 @@
+<h4 *ngIf="customerContactList">{{customerContactList.name}}</h4>
+<ul *ngIf="contacts; else loading">
+    <li
+      *ngFor="let contact of contacts"
+      routerLink="contact-edit/{{contact.id}}"
+    >
+      {{contact.firstName}} {{contact.lastName}}
+    </li>
+</ul>
+<ng-template #loading>loading...</ng-template>
+
+<button routerLink="new-contact">New</button>
+
+<router-outlet ></router-outlet>
