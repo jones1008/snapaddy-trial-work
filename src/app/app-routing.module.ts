@@ -15,7 +15,7 @@ const routes: Routes = [
     component: ContactlistComponent,
     children: [
       {
-        path: 'contact-edit/:id',
+        path: 'contact-edit/:contactId',
         component: ContactEditView
       },
       {

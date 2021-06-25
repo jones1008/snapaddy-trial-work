@@ -1,9 +1,8 @@
-import {Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {ContactApiService} from "../../services/contact-api.service";
 import {Contact} from "../../interfaces/Contact";
 import {ContactService} from "../../services/contact.service";
-import {filter} from "rxjs/operators";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -24,10 +23,7 @@ export class ContactEditView implements OnInit, OnDestroy {
   routeEventSubscription?: Subscription;
 
   get currentContact(): Contact | undefined {
-    return this.contactService.currentContact;
-  }
-  set currentContact(value: Contact | undefined) {
-    this.contactService.currentContact = value;
+    return this.contactService.getCurrentContact(this.contactId);
   }
 
   get contacts(): Contact[] | undefined {
@@ -37,33 +33,19 @@ export class ContactEditView implements OnInit, OnDestroy {
     this.contactService.contacts = value;
   }
 
+  get contactId(): string {
+    return this.actRoute.snapshot.params.contactId;
+  }
+
   ngOnInit(): void {
-    // subscribe to navigation change to reload contact
-    this.routeEventSubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.getContact();
-      }
-    });
   }
 
   ngOnDestroy() {
     this.routeEventSubscription?.unsubscribe();
   }
 
-  getContact(): void {
-    if (this.contactId) {
-      this.contactApiService.getContact(this.contactId).subscribe((contact: Contact) => {
-        this.currentContact = contact;
-      });
-    } else {
-      // TODO: error handling
-      console.log("ERROR: contactId is null");
-    }
-  }
-
   updateContact(contactToUpdate: Contact): void {
-    this.contactApiService.updateContact(contactToUpdate).subscribe((contact: Contact) => {
-      // TODO: success handling
+    this.contactApiService.updateContact(contactToUpdate).subscribe((updatedContact: Contact) => {
       console.log("successfully saved Contact")
     });
   }
@@ -76,9 +58,5 @@ export class ContactEditView implements OnInit, OnDestroy {
       this.contacts?.splice(this.contacts?.findIndex(c => c.id === contactToDelete.id), 1);
       this.router.navigate(['/contactlist']);
     });
-  }
-
-  get contactId(): string | undefined {
-    return this.actRoute.snapshot.params?.id;
   }
 }

@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {Contact} from "../interfaces/Contact";
+import {ContactService} from "../services/contact.service";
 
 @Component({
   selector: 'app-root',

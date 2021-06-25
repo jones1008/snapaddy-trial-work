@@ -1,7 +1,9 @@
 
 <div *ngIf="currentContact">
-  <app-contact-edit [contact]="currentContact"></app-contact-edit>
+  <form (ngSubmit)="updateContact(currentContact)">
+    <app-contact-edit [contact]="currentContact"></app-contact-edit>
 
-  <button (click)="updateContact(currentContact)">Save</button>
+    <button type="submit">Save</button>
+  </form>
   <button (click)="deleteContact(currentContact)">Delete</button>
 </div>
